@@ -4,12 +4,8 @@ from app.shop import Shop
 from os import path
 
 
-project_dir = path.dirname(path.dirname(path.abspath(__file__)))
-config_file = path.join(project_dir, "app/config.json")
-
-
 def shop_trip() -> None:
-    with open("config_file", "r") as config:
+    with open("app/config.json", "r") as config:
         config_data = json.load(config)
     fuel_price = config_data["FUEL_PRICE"]
     customers = [Customer(**customer_data)
