@@ -1,10 +1,16 @@
 import json
 from app.customer import Customer
 from app.shop import Shop
+from os import path
+
+
+
+project_dir = path.dirname(path.dirname(path.abspath(__file__)))
+config_file = path.join(project_dir, "app/config.json")
 
 
 def shop_trip() -> None:
-    with open("app/config.json", "r") as config_file:
+    with open("config_file", "r") as config_file:
         config_data = json.load(config_file)
     fuel_price = config_data["FUEL_PRICE"]
     customers = [Customer(**customer_data)
@@ -31,7 +37,7 @@ def shop_trip() -> None:
             continue
         result_message += ("Date: 04/01/2021 12:33:41\n"
                            f"Thanks, {customer.name}, for your purchase!\n"
-                           f"You have bought: \n")
+                           f"You have bought:\n")
         shop = smallest_price_tuple[2]
         for product, quantity in customer.product_cart.items():
             price = shop.products[product] * quantity
