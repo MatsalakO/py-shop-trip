@@ -1,15 +1,18 @@
+import math
+
 from app.car import Car
 from app.shop import Shop
 
 
 class Customer:
-    def __init__(self,
-                 name: str,
-                 product_cart: dict,
-                 location: list,
-                 money: int,
-                 car: dict
-                 ) -> None:
+    def __init__(
+            self,
+            name: str,
+            product_cart: dict,
+            location: list,
+            money: int,
+            car: dict
+    ) -> None:
         self.name = name
         self.product_cart = product_cart
         self.location = location
@@ -24,14 +27,11 @@ class Customer:
         return round(total_cost, 2)
 
     def calculate_distance(self, shop_location: list) -> float:
-        x1, y1 = self.location
-        x2, y2 = shop_location
-        distance = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
-        return distance
+        return math.dist(self.location, shop_location)
 
     def calculate_product_cost(self, shop: Shop) -> float:
-        product_cost = 0
-        for product, quantity in self.product_cart.items():
-            if product in shop.products:
-                product_cost += shop.products[product] * quantity
-        return product_cost
+        return sum(
+            shop.products[product] * quantity
+            for product, quantity in self.product_cart.items()
+            if product in shop.products
+        )
